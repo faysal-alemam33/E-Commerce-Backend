@@ -7,16 +7,15 @@ import com.springboot.ecommerce.dto.RegisterRequest;
 import com.springboot.ecommerce.entity.User;
 import com.springboot.ecommerce.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/users")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*", allowCredentials = "true")
 public class AuthController {
     @Autowired
     private UserService userService;
@@ -34,6 +33,19 @@ public class AuthController {
         User user = userService.authenticate(request);
         String token = jwtUtil.generateToken(user.getEmail());
         return  ResponseEntity.ok(Map.of("token", token));
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<String> updateUserName(@RequestHeader("Authorization") String authorizationHeader
+                                                 ,@RequestParam String name){
+
+        // Extract the token from the Authorization header
+        String token = authorizationHeader.replace("Bearer ", "");
+        // Verify and extract the user from the token
+        String email = userService.getUserFromToken(token);
+        // Update the username
+        userService.update(email, name);
+        return ResponseEntity.status(HttpStatus.OK).body("name updated");
     }
 
 }

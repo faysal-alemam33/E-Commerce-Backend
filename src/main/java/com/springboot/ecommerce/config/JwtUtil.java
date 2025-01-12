@@ -9,7 +9,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 //    @Value("${jwt.secret}")
-    private final String secret = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
+    private final static String secret = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
 
     private final long expiration = 3600000;
 
@@ -22,11 +22,11 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String extractEmail(String token) {
+    public static String extractEmail(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
-    public boolean validateToken(String token) {
+    public static boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
             return true;

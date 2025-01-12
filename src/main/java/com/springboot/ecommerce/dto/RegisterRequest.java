@@ -11,7 +11,7 @@ public class RegisterRequest {
     private String email;
     private String password;
     private String name;
-    private String role;            // USER or ADMIN
+//    private String role;            // USER or ADMIN
 
 
     public String getEmail() {
@@ -38,13 +38,13 @@ public class RegisterRequest {
         this.name = name;
     }
 
-    public String getRole() {
-        return role;
-    }
+//    public String getRole() {
+//        return role;
+//    }
 
-    public void setRole(String role) {
-        this.role = role;
-    }
+//    public void setRole(String role) {
+//        this.role = role;
+//    }
 }
 
 /*
