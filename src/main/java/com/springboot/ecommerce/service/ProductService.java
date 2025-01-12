@@ -38,7 +38,6 @@ public class ProductService {
     private static final String UPLOAD_DIR = "uploads";
 
 
-
     @Transactional
     public ProductResponse createProduct(ProductRequest request, MultipartFile image) throws IOException {
         Product product = new Product();
